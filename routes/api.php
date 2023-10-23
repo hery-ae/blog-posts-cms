@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group( function() {
     Route::get('/posts', [Post::class, 'index']);
-    Route::get('/post/{id}', [Post::class, 'detail']);
+    Route::get('/{category}/posts', [Post::class, 'index']);
+    Route::get('/{category}/{post_name}', [Post::class, 'detail']);
 });

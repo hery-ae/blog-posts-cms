@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::redirect('/', '/posts');
 Route::get('/sign-in', function() {
     return view('sign-in');
 })
-->name('sign_in');
+->name('login');
 
 Route::post('/sign-in', function(Request $request) {
     $credentials = $request->validate([
@@ -44,6 +45,6 @@ Route::get('/sign-out', function(Request $request) {
 
     return redirect('sign-in');
 })
-->name('sign_out');
+->name('logout');
 
 Route::middleware('auth')->resource('posts', Post::class);

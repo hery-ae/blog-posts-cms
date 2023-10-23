@@ -6,14 +6,14 @@ use App\Models\Post as PostModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class SalesDeal extends Controller
+class Post extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $category = null)
     {
         $posts = PostModel::with(['category']);
 
@@ -46,10 +46,13 @@ class SalesDeal extends Controller
             $posts->latest();
         }
 
+		$posts = $posts->get()->toArray();
+
 		return response()->json([
 			'recordsTotal' => $recordsTotal,
 			'recordsFiltered' => $recordsFiltered,
-			'data' => $posts->toArray()
+			'data' => $posts,
+			'category' => $category,
 		]);
     }
 
@@ -59,11 +62,11 @@ class SalesDeal extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function detail($id)
+    public function detail($category, $postName)
     {
-        $post = PostModel::find($id);
+        $post = PostModel::where('name', $postName)->first();
 
-        return response()->json($post->toArray());
+        return response()->json($post);
     }
 
 }
