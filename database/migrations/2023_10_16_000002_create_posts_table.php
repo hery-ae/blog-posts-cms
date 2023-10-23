@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('category_id');
             $table->integer('priority');
-            $table->string('pathname');
+            $table->string('name')->unique();
             $table->string('title');
             $table->string('description');
             $table->string('thumbnail');
