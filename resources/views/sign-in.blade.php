@@ -11,6 +11,16 @@
           height: 100%;
         }
 
+		.sign-in {
+          border: 1px solid #e8e8e8;
+		  border-radius: 4px;
+		  overflow: hidden;
+		  width: 28em;
+		  min-width: 300px;
+		  margin: 100px auto;
+		  height: auto;
+		}
+
         .form-signin {
           max-width: 330px;
           padding: 1rem;

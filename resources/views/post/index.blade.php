@@ -1,11 +1,11 @@
 <x-layout>
     <table id="dt-post" class="table table-bordered table-hover table-striped w-100"></table>
-    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/datatables/datatables.bundle.js"></script>
+    <script type="text/javascript" src="/jquery/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="/moment/min/moment.min.js"></script>
     <script type="text/javascript">
         $(document).ready( function() {
-            $.fn.dataTable.ext.errMode = 'throw';
+            $.fn.dataTable.ext.errMode = 'throw'
 
             $('#dt-post').DataTable({
                 responsive: true,
@@ -31,11 +31,11 @@
                         }
                     },
                     {
-                        text: 'Update',
-                        titleAttr: 'Update Post',
+                        text: 'Edit',
+                        titleAttr: 'Edit Post',
                         className: 'btn btn-outline-secondary mr-1',
                         action: function ( e, dt, node, config ) {
-                            window.location.replace(String(@json(route('posts.index'))).concat('/').concat(dt.row('.selected').data.id)))
+                            window.location.replace(String(@json(route('posts.index'))).concat('/').concat(dt.row('.selected').data().id).concat('/edit'))
                         }
                     },
                     {
@@ -45,7 +45,7 @@
                         action: function ( e, dt, node, config ) {
                             let form = document.createElement('form')
                             form.setAttribute('method', 'post')
-                            form.setAttribute('action', String(@json(route('posts.index'))).concat('/').concat(dt.row('.selected').data.id))
+                            form.setAttribute('action', String(@json(route('posts.index'))).concat('/').concat(dt.row('.selected').data().id))
 
                             let token = document.createElement('input')
                             token.setAttribute('type', 'hidden')
@@ -67,7 +67,14 @@
                         }
                     }
                 ],
-                data: @json($posts->toArray()),
+                ajax: {
+                    url: @json('/api/posts'),
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: {
+                        Authorization: String('Bearer').concat(' ').concat($(document).find('[name="api-token"]').attr('content'))
+                    }
+                },
                 columns: [
                     {
                         title: 'Title',
@@ -103,5 +110,9 @@
                 initComplete: function(settings, json) {
                     settings.oInstance.api().columns().header().to$().addClass('text-center');
                     settings.oInstance.api().table().header().classList.add('thead-dark');
+				}
+			})
+		})
+	</script>
 
 </x-layout>

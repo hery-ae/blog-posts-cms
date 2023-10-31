@@ -4,9 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+@if (auth()->check() && auth()->user()->exists)
+    <meta name="api-token" content="{{ auth()->user()->createToken('api-token')->plainTextToken }}">
+@endif
     <title>{{ config('app.name') }}</title>
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/datatables/datatables.bundle.css" rel="stylesheet">
+    <link href="/datatables/datatables.min.css" rel="stylesheet">
     <link rel="icon" href="/favicon.ico" />
     <style>
       body {
@@ -17,15 +20,19 @@
         font-family: \"Playfair Display\", Georgia, \"Times New Roman\", serif
       }
 
+      .pointer {
+          cursor: pointer;
+      }
+
     </style>
   </head>
   <body class="mw-100 mx-auto">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between gap-2 py-3">
       <div class="col-auto col-md-3 my-auto">
-        <h1 class="h2 my-0 fw-bold">{{ config('app.name') }}</h1>
+        <h1 class="h2 my-0 fw-bold"><a href="{{ config('app.url') }}" class="link-dark text-decoration-none">{{ config('app.name') }}</a></h1>
       </div>
       <div class="col-auto col-md-3 text-end d-none d-md-block">
-        <a href="{{ route('sign_out') }}" class="link-secondary">
+        <a href="{{ route('logout') }}" class="link-secondary">
           Sign out
         </a>
       </div>

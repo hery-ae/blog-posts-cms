@@ -1,6 +1,7 @@
 <x-layout>
-    <form action="{{ route('posts.update', ['id' => $post->id]) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('posts.update', ['post' => $post->id]) }}" method="post" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="form-group">
             <label class="form-label" for="category">Category</label>
             <select name="category" class="form-select" required>
@@ -22,17 +23,28 @@
             <input type="text" name="title" class="form-control" value="{{ $post->title }}" required>
         </div>
         <div class="form-group">
+            <label class="form-label" for="tags">Tags</label>
+@if ($post->postTags()->exists())
+            <input type="text" name="tags" class="form-control" value="#{{ $post->postTags->pluck('tag.name')->join('#') }}">
+@else
+            <input type="text" name="tags" class="form-control">
+@endif
+        </div>
+        <div class="form-group">
             <label class="form-label" for="description">Description</label>
-            <input type="text" name="description" class="form-control" required>
+            <input type="text" name="description" class="form-control" value="{{ $post->description }}" required>
         </div>
         <div class="form-group">
             <label class="form-label" for="thumbnail">Thumbnail</label>
-            <input type="file" name="thumbnail" class="form-control" accept="image/png, image/jpeg" required>
+            <input type="file" name="thumbnail" class="form-control" accept="image/png, image/jpeg">
         </div>
         <div class="form-group">
             <label class="form-label" for="content">content</label>
-            <textarea name="content" class="form-control" rows="5" required></textarea>
+            <textarea name="content" class="form-control" rows="5"></textarea>
         </div>
+        <button type="submit" class="btn btn-lg btn-primary my-3">
+            Submit
+        </button>
     </form>
     <script src="/tinymce/tinymce.min.js"></script>
     <script type="text/javascript">

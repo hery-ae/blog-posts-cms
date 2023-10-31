@@ -15,7 +15,12 @@ class Post extends Controller
      */
     public function index(Request $request, $category = null)
     {
-        $posts = PostModel::with(['category']);
+        $posts = PostModel::with([
+            'category',
+            'postTags' => function($query) {
+                $query->with(['tag']);
+            },
+        ]);
 
         $recordsTotal = $posts->count();
 

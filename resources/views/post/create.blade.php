@@ -19,6 +19,10 @@
             <input type="text" name="title" class="form-control" required>
         </div>
         <div class="form-group">
+            <label class="form-label" for="tags">Tags</label>
+            <input type="text" name="tags" class="form-control">
+        </div>
+        <div class="form-group">
             <label class="form-label" for="description">Description</label>
             <input type="text" name="description" class="form-control" required>
         </div>
@@ -28,8 +32,11 @@
         </div>
         <div class="form-group">
             <label class="form-label" for="content">content</label>
-            <textarea name="content" class="form-control" rows="5" required></textarea>
+            <textarea name="content" class="form-control" rows="5"></textarea>
         </div>
+        <button type="submit" class="btn btn-lg btn-primary my-3">
+            Submit
+        </button>
     </form>
     <script src="/tinymce/tinymce.min.js"></script>
     <script type="text/javascript">
